@@ -64,8 +64,8 @@ function ($scope, Auth, $location) {
 
 }])
 
-.controller('addOutfitCtrl', ['$scope', '$location', 'Auth', 'Outfit',
-function ($scope, $location, Auth, Outfit) {
+.controller('addOutfitCtrl', ['$scope', '$stateParams', '$state', '$location', 'Auth', 'Outfit',
+function ($scope, $stateParams, $state, $location, Auth, Outfit) {
   console.log('addOutfitCtrl reached');
   console.log(Outfit);
   $scope.Auth = Auth;
@@ -75,26 +75,35 @@ function ($scope, $location, Auth, Outfit) {
     $location.path('/login');
   }
 
-  $scope.outfit = {
-    image: '',
-    description: '',
-    date: ''
-  };
+//create new outfit instance. Properties will be set via ng-model on UI
+  $scope.outfit = new Outfit();
 
+// create a new outfit. Issues a post to /api/outfits
   $scope.saveOutfit = function() {
-    console.log('saveOutfit called', $scope.outfit);
-    Outfit.save($scope.outfit, function success(res) {
-      $location.path('/welcome');
-    }, function error(res) {
-        console.log(res);
+    $scope.outfit.$save(function() {
+      $state.go('outfits');
     });
-  };
 
+// Old code....
+  // $scope.outfit = {
+  //   image: '',
+  //   description: '',
+  //   date: ''
+  // };
+
+  // $scope.saveOutfit = function() {
+  //   console.log('saveOutfit called', $scope.outfit);
+  //   Outfit.save($scope.outfit, function success(res) {
+  //     $location.path('/welcome');
+  //   }, function error(res) {
+  //       console.log(res);
+  //   });
+  // };
 
 }])
 
-.controller('editOutfitCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit',
-function ($scope, $location, $stateParams, Auth, Outfit) {
+.controller('editOutfitCtrl', ['$scope', '$location', '$stateParams', '$state', 'Auth', 'Outfit',
+function ($scope, $location, $stateParams, $state, Auth, Outfit) {
   $scope.Auth = Auth;
 
 // see if user is logged in and if not redirect using $location.path
@@ -102,12 +111,20 @@ function ($scope, $location, $stateParams, Auth, Outfit) {
     $location.path('/login');
   }
 
-  // PUT request here
-  // $scope.editOutfit = function() {
-    //     // $location.path('/calendar/{id}/editentry');
-    //     // $state.go('viewEntry.index.edit');
-    //     $state.go('editEntry');
-    //   };
+// Updating the outfit. Issues a PUT to /api.outfits/:id
+  $scope.editOutfit = function() {
+    $scope.outfit.$update(function() {
+      $state.go('outfits');
+    });
+  };
+
+// issues a GET request to api/outfits/:id to fetch the outfit we want to update
+  $scope.displayOutfit = function() {
+    $scope.outfit = Outfit.get({ id: $stateParams.id});
+  };
+
+  // Now we call the function so that the outfit will appear on the UI
+  $scope.displayOutfit();
 
 }])
 
@@ -139,7 +156,7 @@ function ($scope, $state, $location, $window, Auth, popupService, Outfit) {
   }
 
 
-
+// old code...
 //   $scope.outfits = [];
 
 //   Outfit.query(function success(res) {
@@ -173,8 +190,8 @@ function ($scope, $state, $location, $window, Auth, popupService, Outfit) {
 
 }])
 
-.controller('viewOutfitCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit', '$state',
-function ($scope, $location, $stateParams, Auth, Outfit, $state) {
+.controller('viewOutfitCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit',
+function ($scope, $location, $stateParams, Auth, Outfit) {
   $scope.Auth = Auth;
 
 // see if user is logged in and if not redirect using $location.path
@@ -182,25 +199,19 @@ function ($scope, $location, $stateParams, Auth, Outfit, $state) {
     $location.path('/login');
   }
 
-  // Outfit.findById(function success(res) {
+ // fetches a single outfit. Issues a GET to /api/outfits/:id
+  $scope.outfit = Outfit.get({id: stateParams.id});
 
-  // })
+// old code...
+  // $scope.outfit = {};
 
-  $scope.outfit = {};
-
-    Outfit.get({ id: $stateParams.id }, function success(res) {
-      console.log('viewEntryCtrl scope outfit', res);
-      console.log(Outfit.description)
-      $scope.outfit = res;
-    }, function error(res) {
-        console.log(res);
-    });
-
-    // $scope.editOutfit = function() {
-    //     // $location.path('/calendar/{id}/editentry');
-    //     // $state.go('viewEntry.index.edit');
-    //     $state.go('editEntry');
-    //   };
+  //   Outfit.get({ id: $stateParams.id }, function success(res) {
+  //     console.log('viewEntryCtrl scope outfit', res);
+  //     console.log(Outfit.description)
+  //     $scope.outfit = res;
+  //   }, function error(res) {
+  //       console.log(res);
+  //   });
 
 }])
 
