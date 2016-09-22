@@ -109,12 +109,19 @@ function ($scope, $location, $stateParams, Auth, Outfit) {
     $location.path('/login');
   }
 
+  // PUT request here
+  // $scope.editOutfit = function() {
+    //     // $location.path('/calendar/{id}/editentry');
+    //     // $state.go('viewEntry.index.edit');
+    //     $state.go('editEntry');
+    //   };
+
 }])
 
-.controller('calendarCtrl', ['$scope', '$location', 'Auth', 'Outfit', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('calendarCtrl', ['$scope', '$location', 'Auth', 'Outfit', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $location, Auth, Outfit) {
+function ($scope, $location, Auth, Outfit, $state) {
   $scope.Auth = Auth;
 
 // see if user is logged in and if not redirect using $location.path
@@ -138,6 +145,7 @@ function ($scope, $location, Auth, Outfit) {
     return trueOrigin;
   }
 
+// delete route is not deleting the correct outfit
   $scope.deleteOutfit = function(id, outfitIdx) {
     Outfit.delete({id: id}, function success(res) {
       $scope.outfits.splice(outfitIdx, 1);
@@ -145,6 +153,13 @@ function ($scope, $location, Auth, Outfit) {
       console.log(res);
     });
   };
+
+  $scope.viewOutfit = function() {
+    // Outfit.get({id: id})
+    $state.go('viewEntry')
+    console.log()
+  };
+
 }])
 
 .controller('viewEntryCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -161,21 +176,22 @@ function ($scope, $location, $stateParams, Auth, Outfit, $state) {
   // Outfit.findById(function success(res) {
 
   // })
-    $scope.viewOutfit = function() {
-      $state.go('viewEntry.index')
-    };
 
-    Outfit.get({ id:$stateParams.id }, function success(res) {
+  $scope.outfit = {};
+
+    Outfit.get({ id: $stateParams.id }, function success(res) {
       console.log('viewEntryCtrl scope outfit', res);
+      console.log(Outfit.description)
       $scope.outfit = res;
     }, function error(res) {
         console.log(res);
     });
 
-    $scope.editOutfit = function() {
-        // $location.path('/calendar/{id}/editentry');
-        $state.go('viewEntry.index.edit');
-      };
+    // $scope.editOutfit = function() {
+    //     // $location.path('/calendar/{id}/editentry');
+    //     // $state.go('viewEntry.index.edit');
+    //     $state.go('editEntry');
+    //   };
 
 }])
 

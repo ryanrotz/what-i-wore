@@ -1,7 +1,14 @@
 angular.module('app.services', ['ngResource'])
 
 .factory('Outfit', ['$resource', function($resource) {
-  return $resource('https://whatiwore.herokuapp.com/api/outfits/:id');
+  return $resource('https://whatiwore.herokuapp.com/api/outfits/:id', {}, {
+    // query: { isArray: false }
+    // all: { method: 'GET', cache: false, isArray: false },
+    get: { method: 'GET', isArray: true }
+    // save: { method: 'POST', cache: false, isArray: false },
+    // update: { method: 'PUT', cache: false, isArray: false },
+    // delete: { method: 'DELETE', cache: false, isArray: false }
+  });
 }])
 
 .factory('Auth', ['$window', function($window) {
