@@ -24,9 +24,7 @@ function ($scope, $stateParams) {
     }
 }])
 
-.controller('signupCtrl', ['$scope', '$http', '$location', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
+.controller('signupCtrl', ['$scope', '$http', '$location', '$stateParams',
   function ($scope, $http, $location, $stateParams) {
   $scope.user = {
     email: '',
@@ -43,9 +41,7 @@ function ($scope, $stateParams) {
   }
 }])
 
-.controller('welcomeCtrl', ['$scope', 'Auth', '$location', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
+.controller('welcomeCtrl', ['$scope', 'Auth', '$location',
 function ($scope, Auth, $location) {
   console.log('Token is:', Auth.getToken());
   $scope.Auth = Auth;
@@ -68,11 +64,9 @@ function ($scope, Auth, $location) {
 
 }])
 
-.controller('addEntryCtrl', ['$scope', '$location', 'Auth', 'Outfit', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
+.controller('addOutfitCtrl', ['$scope', '$location', 'Auth', 'Outfit',
 function ($scope, $location, Auth, Outfit) {
-  console.log('addEntryCtrl reached');
+  console.log('addOutfitCtrl reached');
   console.log(Outfit);
   $scope.Auth = Auth;
 
@@ -84,23 +78,22 @@ function ($scope, $location, Auth, Outfit) {
   $scope.outfit = {
     image: '',
     description: '',
-    date: '',
+    date: ''
   };
 
   $scope.saveOutfit = function() {
     console.log('saveOutfit called', $scope.outfit);
-    // console.log(Outfit);
     Outfit.save($scope.outfit, function success(res) {
       $location.path('/welcome');
     }, function error(res) {
         console.log(res);
     });
   };
+
+
 }])
-// the editEntryCtrl controller is not needed anymore because we made it a nested state of viewEntry. It now uses the viewEntry controller.
-.controller('editEntryCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
+
+.controller('editOutfitCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit',
 function ($scope, $location, $stateParams, Auth, Outfit) {
   $scope.Auth = Auth;
 
@@ -118,10 +111,8 @@ function ($scope, $location, $stateParams, Auth, Outfit) {
 
 }])
 
-.controller('calendarCtrl', ['$scope', '$location', 'Auth', 'Outfit', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $location, Auth, Outfit, $state) {
+.controller('outfitCtrl', ['$scope', '$state', '$location', '$window', 'Auth', 'popupService', 'Outfit',
+function ($scope, $state, $location, $window, Auth, popupService, Outfit) {
   $scope.Auth = Auth;
 
 // see if user is logged in and if not redirect using $location.path
@@ -129,14 +120,16 @@ function ($scope, $location, Auth, Outfit, $state) {
     $location.path('/login');
   }
 
-  $scope.outfits = [];
+// fetches all outfits. Issues a GET to /api/outfits
+  $scope.outfits = Outfit.query();
 
-  Outfit.query(function success(res) {
-    console.log(res)
-    $scope.outfits = res;
-  }, function error(res) {
-    console.log(res);
-  });
+  $scope.deleteOutfit = function(outfit) {
+    if (popupService.showPopup('Delete this outfit?')) {
+      outfit.delete(function() {
+        $window.location.href = '';
+      });
+    }
+  };
 
   $scope.urlForImage = function(imageName){
     var name = imageName.substr(imageName.lastIndexOf('/') + 1);
@@ -145,26 +138,42 @@ function ($scope, $location, Auth, Outfit, $state) {
     return trueOrigin;
   }
 
-// delete route is not deleting the correct outfit
-  $scope.deleteOutfit = function(id, outfitIdx) {
-    Outfit.delete({id: id}, function success(res) {
-      $scope.outfits.splice(outfitIdx, 1);
-    }, function error(res) {
-      console.log(res);
-    });
-  };
 
-  $scope.viewOutfit = function() {
-    // Outfit.get({id: id})
-    $state.go('viewEntry')
-    console.log()
-  };
+
+//   $scope.outfits = [];
+
+//   Outfit.query(function success(res) {
+//     console.log(res)
+//     $scope.outfits = res;
+//   }, function error(res) {
+//     console.log(res);
+//   });
+
+//   $scope.urlForImage = function(imageName){
+//     var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+//     var trueOrigin = cordova.file.dataDirectory + name;
+//     console.log('In calendar controller, url changer: ', trueOrigin);
+//     return trueOrigin;
+//   }
+
+// // delete route is not deleting the correct outfit
+//   $scope.deleteOutfit = function(id, outfitIdx) {
+//     Outfit.delete({id: id}, function success(res) {
+//       $scope.outfits.splice(outfitIdx, 1);
+//     }, function error(res) {
+//       console.log(res);
+//     });
+//   };
+
+//   $scope.viewOutfit = function() {
+//     // Outfit.get({id: id})
+//     $state.go('viewEntry')
+//     console.log()
+//   };
 
 }])
 
-.controller('viewEntryCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit', '$state', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
+.controller('viewOutfitCtrl', ['$scope', '$location', '$stateParams', 'Auth', 'Outfit', '$state',
 function ($scope, $location, $stateParams, Auth, Outfit, $state) {
   $scope.Auth = Auth;
 
