@@ -83,6 +83,7 @@ function ($scope, $stateParams, $state, $location, Auth, Outfit) {
     $scope.outfit.$save(function() {
       $state.go('outfits');
     });
+  };
 
 // Old code....
   // $scope.outfit = {
@@ -128,8 +129,8 @@ function ($scope, $location, $stateParams, $state, Auth, Outfit) {
 
 }])
 
-.controller('outfitCtrl', ['$scope', '$state', '$location', '$window', 'Auth', 'popupService', 'Outfit',
-function ($scope, $state, $location, $window, Auth, popupService, Outfit) {
+.controller('outfitCtrl', ['$scope', '$state', '$location', '$window', 'Auth', 'Outfit',
+function ($scope, $state, $location, $window, Auth, Outfit) {
   $scope.Auth = Auth;
 
 // see if user is logged in and if not redirect using $location.path
@@ -141,11 +142,8 @@ function ($scope, $state, $location, $window, Auth, popupService, Outfit) {
   $scope.outfits = Outfit.query();
 
   $scope.deleteOutfit = function(outfit) {
-    if (popupService.showPopup('Delete this outfit?')) {
-      outfit.delete(function() {
-        $window.location.href = '';
-      });
-    }
+    // Add modal here w/ if statement, ask "do you want to delete this outfit?"
+      outfit.$delete();
   };
 
   $scope.urlForImage = function(imageName){
@@ -200,7 +198,7 @@ function ($scope, $location, $stateParams, Auth, Outfit) {
   }
 
  // fetches a single outfit. Issues a GET to /api/outfits/:id
-  $scope.outfit = Outfit.get({id: stateParams.id});
+  $scope.outfit = Outfit.get({id: $stateParams.id});
 
 // old code...
   // $scope.outfit = {};

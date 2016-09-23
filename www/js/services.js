@@ -1,10 +1,14 @@
 angular.module('app.services', ['ngResource'])
 
 .factory('Outfit', ['$resource', function($resource) {
-  return $resource('https://whatiwore.herokuapp.com/api/outfits/:id', {}, {
+  return $resource('https://whatiwore.herokuapp.com/api/outfits/:id', { id: '@_id' }, {
+    update: {
+      method: 'PUT' // this method issues a PUT request
+    }
+
     // query: { isArray: false }
     // all: { method: 'GET', cache: false, isArray: false },
-    get: { method: 'GET', isArray: true }
+    // get: { method: 'GET', isArray: true }
     // save: { method: 'POST', cache: false, isArray: false },
     // update: { method: 'PUT', cache: false, isArray: false },
     // delete: { method: 'DELETE', cache: false, isArray: false }

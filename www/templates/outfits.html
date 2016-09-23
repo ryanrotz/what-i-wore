@@ -21,12 +21,12 @@
               <p><strong>Description</strong> {{outfit.description}}</p>
 
               <!-- IF BUTTON DOESN'T WORK, TRY '<a>'' tag -->
-              <button ng-click="deleteOutfit(outfit)">Delete</button>
+              <button><a ng-click="deleteOutfit(outfit)">Delete</a></button>
               <!-- <div>Image: {{outfit.image}}</div> -->
             <!--   <button ng-click="deleteOutfit(outfit._id, $index)" class="button button-assertive button-small">Delete</button> -->
              <!--  <a ng-click="viewOutfit()">View outfit</a>
               <a ng-href="#/outfits/{{outfit._id}}/view">View outfit!</a> -->
-              <a ui-sref="viewOutfit"({id:outfit._id})></a>
+              <a ui-sref="viewOutfit({id:outfit._id})">View outfit</a>
 
           </div>
         </div>

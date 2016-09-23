@@ -1,6 +1,6 @@
 <ion-view title="Welcome">
     <ion-content padding="true" class="has-header">
-        <a ng-href="#/outifts" class=" button button-positive  button-block ">View outfits</a>
+        <a ui-sref="outfits" class=" button button-positive  button-block ">View outfits</a>
         <a ng-href="#/outfits/new" class=" button button-balanced  button-block ">Add outfit</a>
         <!-- referencing the 'Auth' factory -->
         <a ng-href="#/welcome" ng-click="logout()" ng-show="Auth.isLoggedIn()" id="logout" class=" button button-positive  button-block button-clear ">Logout</a>
