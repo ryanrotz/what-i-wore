@@ -1,0 +1,19 @@
+<!-- We're using two controllers here. The Camera controller and the addOutfitCtrl... Should we condense the two controllers to one??? -->
+<ion-view title="My Outfit" class=" ">
+    <ion-content padding="true" class="has-header" ng-controller="CameraCtrl">
+        <p style="color:#000000;text-align:center;" class=" ">My Outfit</p>
+
+        <div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
+            <!-- <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i> -->
+            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+            <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
+        </div>
+
+        <button ng-click="takePicture()" class=" button button-positive  button-block ">Add photo</button>
+
+        <form class="list " ng-submit="saveOutfit()">
+        <div ng-include="'templates/_add-outfit-form.html'"></div>
+        </form>
+
+    </ion-content>
+</ion-view>

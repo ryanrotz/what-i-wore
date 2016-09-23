@@ -1,7 +1,7 @@
-<ion-view title="Welcome" id="page4" class=" ">
+<ion-view title="Welcome">
     <ion-content padding="true" class="has-header">
-        <a ng-href="#/calendar" id="welcome-button9" class=" button button-positive  button-block ">What I wore</a>
-        <a ng-href="#/addentry" id="welcome-button10" class=" button button-balanced  button-block ">What I'm wearing</a>
+        <a ui-sref="outfits" class=" button button-positive  button-block ">View outfits</a>
+        <a ng-href="#/outfits/new" class=" button button-balanced  button-block ">Add outfit</a>
         <!-- referencing the 'Auth' factory -->
         <a ng-href="#/welcome" ng-click="logout()" ng-show="Auth.isLoggedIn()" id="logout" class=" button button-positive  button-block button-clear ">Logout</a>
     </ion-content>

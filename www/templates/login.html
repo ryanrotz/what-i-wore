@@ -1,18 +1,18 @@
 <ion-view title="Login" id="login">
     <ion-content padding="true" class="has-header">
-        <form id="login-form1" class="list " ng-submit="userLogin()">
+        <form class="list " ng-submit="userLogin()">
             <ion-list id="login-list">
-                <label class="item item-input " for="email" id="login-input1" name="email">
+                <label class="item item-input " for="email" name="email">
                     <span class="input-label">Email</span>
                     <input type="email" id="email" ng-model="user.email">
                 </label>
-                <label class="item item-input " for="password" id="login-input2" name="password">
+                <label class="item item-input " for="password" name="password">
                     <span class="input-label">Password</span>
                     <input type="password" id="password" ng-model="user.password">
                 </label>
             </ion-list>
             <div class="spacer" style="height: 40px;"></div>
-            <button type="submit" id="login-button" class=" button button-stable  button-block ">Log in</button>
+            <button type="submit" class=" button button-stable  button-block ">Log in</button>
             <a ng-href="#/signup" id="create-account" class=" button button-positive  button-block button-clear ">Or create an account</a>
         </form>
     </ion-content>

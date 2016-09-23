@@ -1,4 +1,6 @@
-<ion-view title="Edit Entry" id="page8" class=" ">
+<!-- Use add-outfit.html instead -->
+
+<!-- <ion-view title="Edit Entry" id="page8" class=" ">
     <ion-content padding="true" class="has-header">
         <p id="editEntry-markdown2" style="color:#000000;text-align:center;" class=" ">What I'm wearing today</p>
         <div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
@@ -16,5 +18,24 @@
             </label>
             <button id="editEntry-button14" class=" button button-positive  button-block ">Save</button>
         </form>
+    </ion-content>
+</ion-view> -->
+
+<ion-view title="Edit Outfit">
+    <ion-content padding="true" class="has-header" ng-controller="CameraCtrl">
+        <p style="color:#000000;text-align:center;" class=" ">Edit Outfit</p>
+
+        <div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
+            <!-- <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i> -->
+            <img ng-show="imgURI !== undefined" ng-src="{{imgURI}}">
+            <img ng-show="imgURI === undefined" ng-src="http://placehold.it/300x300">
+        </div>
+
+        <button ng-click="takePicture()" class=" button button-positive  button-block ">Update photo</button>
+
+        <form class="list " ng-submit="editOutfit()">
+        <div ng-include="'templates/_add-outfit-form.html'"></div>
+        </form>
+
     </ion-content>
 </ion-view>

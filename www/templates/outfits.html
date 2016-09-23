@@ -1,0 +1,36 @@
+<ion-view title="What I Wore">
+
+  <ion-nav-buttons side="secondary">
+        <!-- <button class="button button-clear button-positive" ng-click="editOutfit()">Edit</button> -->
+
+         <!-- IF BUTTON DOESN'T WORK, TRY '<a>'' tag -->
+        <button class="button button-clear" ui-sref="addOutfit">Add</button>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="has-header">
+      <!-- <div ng-repeat="outfit in outfits | orderBy:'date' track by outfit._id"> -->
+      <!-- I'm removing the 'track by outfit._id' to see if it's necessary for the delete button -->
+      <div ng-repeat="outfit in outfits | orderBy:'date'">
+        <div class="list">
+          <div class="item item-button-right item-thumbnail-left" href="#">
+            <!-- Change image to pull from database -->
+            <!-- <img ng-src="{{urlForImage(outfit.image)}}" ng-click="viewOutfit()"> -->
+            <!-- <img ng-src="http://placehold.it/300x300" ng-click="viewOutfit()"> -->
+            <img ng-src="http://placehold.it/300x300" ui-sref="viewOutfit({id:outfit._id})">
+              <h3><strong>Date: {{outfit.date | date:'longDate'}}</strong></h3>
+              <p><strong>Description</strong> {{outfit.description}}</p>
+
+              <!-- IF BUTTON DOESN'T WORK, TRY '<a>'' tag -->
+              <button ng-click="deleteOutfit(outfit)">Delete</button>
+              <!-- <div>Image: {{outfit.image}}</div> -->
+            <!--   <button ng-click="deleteOutfit(outfit._id, $index)" class="button button-assertive button-small">Delete</button> -->
+             <!--  <a ng-click="viewOutfit()">View outfit</a>
+              <a ng-href="#/outfits/{{outfit._id}}/view">View outfit!</a> -->
+              <a ui-sref="viewOutfit({id:outfit._id})">View outfit</a>
+
+          </div>
+        </div>
+      </div>
+        <a ng-href="#/welcome">Back to welcome page</a>
+  </ion-content>
+</ion-view>

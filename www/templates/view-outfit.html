@@ -1,0 +1,19 @@
+<ion-view title="My Outfit">
+<!--   <ion-nav-buttons side="secondary">
+  <button class="button button-clear button-positive"><a ng-href="#/calendar/{{outfit._id}}/editentry">Edit</a></button>
+  </ion-nav-buttons> -->
+
+  <ion-nav-buttons side="secondary">
+      <!-- <button class="button button-clear button-positive" ng-click="editOutfit()">Edit</button> -->
+      <button class="button button-clear" ui-sref="editOutfit({id:outfit._id})">Edit</button>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="has-header">
+        <h1 style="color:#000000;" class=" ">What I wore</h1>
+        <p style="color:#000000;" class=" ">{{outfit.date | date:'longDate'}}</p>
+        <img ng-src="{{outfit.image}}">
+        <p style="color:#000000;" class=" ">{{outfit.description}}</p>
+        <a ng-href="#/outfits/{{outfit._id}}/edit">Edit</a>
+  </ion-content>
+
+</ion-view>

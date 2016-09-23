@@ -32,42 +32,54 @@ angular.module('app.routes', [])
     controller: 'welcomeCtrl'
   })
 
-  .state('addEntry', {
-    url: '/addentry',
-    templateUrl: 'templates/addEntry.html',
-    controller: 'addEntryCtrl'
+  .state('outfits', {
+    url: '/outfits',
+    templateUrl: 'templates/outfits.html',
+    controller: 'outfitCtrl'
   })
 
-  .state('calendar', {
-    url: '/calendar',
-    templateUrl: 'templates/calendar.html',
-    controller: 'calendarCtrl'
+  .state('addOutfit', {
+    url: '/outfits/new',
+    templateUrl: 'templates/add-outfit.html',
+    controller: 'addOutfitCtrl'
   })
 
-  .state('viewEntry', {
-    url: '/viewentry',
-    templateUrl: 'templates/Entries/index.html',
-    abstract: true
+  .state('viewOutfit', {
+    url: '/outfits/:id/view',
+    templateUrl: 'templates/view-outfit.html',
+    controller: 'viewOutfitCtrl'
   })
 
-  .state('viewEntry.index', {
-    url:'/:id',
-    views: {
-      'viewEntry-index': {
-        templateUrl: 'templates/viewEntry.html',
-        controller: 'viewEntryCtrl'
-      }
-    }
+  .state('editOutfit', {
+    url: '/outfits/:id/edit',
+    templateUrl: 'templates/edit-outfit.html',
+    controller: 'editOutfitCtrl'
   })
-  .state('viewEntry.index.edit', {
-    url: '/edit',
-    views: {
-      'ViewEntry-index-edit': {
-        templateUrl: 'templates/editEntry.html',
-        controller: 'viewEntryCtrl'
-      }
-    }
-  })
+
+  // .state('viewEntry', {
+  //   url: '/viewentry',
+  //   templateUrl: 'templates/Entries/index.html',
+  //   abstract: true
+  // })
+
+  // .state('viewEntry.index', {
+  //   url:'/:id',
+  //   views: {
+  //     'viewEntry-index': {
+  //       templateUrl: 'templates/viewEntry.html',
+  //       controller: 'viewEntryCtrl'
+  //     }
+  //   }
+  // })
+  // .state('viewEntry.index.edit', {
+  //   url: '/edit',
+  //   views: {
+  //     'ViewEntry-index-edit': {
+  //       templateUrl: 'templates/editEntry.html',
+  //       controller: 'viewEntryCtrl'
+  //     }
+  //   }
+  // })
 
 $urlRouterProvider.otherwise('/')
 })
